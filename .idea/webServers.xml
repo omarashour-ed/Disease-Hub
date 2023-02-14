@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="eb335541-d258-4ad3-87fe-fea71e8b40ec" name="sedin181@edinburgh.domains">
+        <fileTransfer rootFolder="/home/sedin181" accessType="SFTP" host="edinburgh.domains" port="22" sshConfigId="dee3c2bb-804f-412c-8a64-ba136fda75a0" sshConfig="sedin181@edinburgh.domains:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

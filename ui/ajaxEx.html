@@ -1,0 +1,338 @@
+
+<html>
+<head>
+<title>AJAX 1</title>
+
+
+
+
+<!-- 
+	using a local copy of jQuery ~~ could alternatively use an online one
+ -->
+ 
+<script>	
+	/*
+	This code adapted from Jules' xmlhttp code
+
+	Explanation: When the query is sent from the JavaScript to the PHP file, the following happens:
+
+		PHP opens a connection to a MySQL server
+		The correct person is found
+		An HTML table is created, filled with data, and sent back to the "responseTable" placeholder
+
+	*/
+
+
+	// the function is called when the user changes the value of the form select below
+	function showUser(str)
+	{
+	// if the string == empty then the first option was selected
+	// so we set the HTML inside our Div to be empty, then quit the script
+		if (str=="") {
+			$("#responseTable").html("");
+			return;
+		}
+ 
+		// create jQuery AJAX call -- can always use the same pattern as here
+		$.ajax({
+			type: 'GET',	// needs to be the http method that the PHP code is expecting
+			url: "{{ @BASE }}/ajaxEx/user/" + str,		// adding data param for F3
+			success: function(response) {	// anonymous function to call if AJAX request successful
+				$("#responseTable").html(response);		
+			},
+			failure: function() {	// anonymous function to call if AJAX request unsuccessful
+				console.log("ajax failure!");
+			},
+	//		data: "q=" + str,		// The query string for the request; don't need one with F3
+		});
+	}
+
+
+	/*
+	This code adapted from http://www.w3schools.com/php/php_ajax_php.asp
+	and then adapted further for use with F3
+
+	Explanation: If there is any text sent from the JavaScript the following happens:
+
+		Find a name matching the characters sent from the JavaScript
+		If no match were found, set the response string to "no suggestion"
+		If one or more matching names were found, set the response string to all these names
+		The response is sent to the "txtHint" placeholder
+
+	*/
+
+	// see the annotations above for an explanation of this code, since it's mostly the same
+	function showHint(str)
+	{
+		console.log("showHint(), str is", str);
+		if (str.length==0) {
+			  $("#txtHint").html("");;
+			  return;
+		}
+  
+		$.ajax({
+			type: 'GET',	// needs to be the http method that the PHP code is expecting
+			url: "{{ @BASE}}/ajaxEx/hint/" + str,
+			success: function(response) {
+				$("#txtHint").html(response);		
+			},
+			failure: function() {
+				console.log("ajax failure!");
+			},
+	//		data: "q=" + str,
+		});
+	}
+
+	function showUsers() {
+		// create jQuery AJAX call -- can always use the same pattern as here
+		$.ajax({
+			type: 'GET',	// needs to be the http method that the PHP code is expecting
+			url: "{{@BASE}}/ajaxEx/nav",	// adding data param for F3
+			success: function (textStatus, status) {
+				console.log(textStatus);
+				console.log(status);
+			},
+			error: function(xhr, textStatus, error) {
+				console.log(xhr.responseText);
+				console.log(xhr.statusText);
+				console.log(textStatus);
+				console.log(error);
+			}
+			//		data: "q=" + str,		// The query string for the request; don't need one with F3
+		});
+
+	}
+</script>
+	<script src="{{@BASE}}/ui/js/script.js"></script>
+</head>
+<body>
+<!--	<h2>Example 1</h2>-->
+<!--	&lt;!&ndash; lookup in db based on select > option &ndash;&gt;-->
+<!--	<form>-->
+<!--		<select name="users" onchange="showUser(this.value)">-->
+<!--			<option value="">Select a person:</option>-->
+<!--			<option value="1">Peter Griffin</option>-->
+<!--			<option value="2">Lois Griffin</option>-->
+<!--			<option value="4">Glenn Quagmire</option>-->
+<!--			<option value="3">Joseph Swanson</option>-->
+<!--		</select>-->
+<!--	</form>-->
+<!--	<br />-->
+<!--	<div id="responseTable">Person info will be listed here.</div>-->
+
+<!--	<h2>Example 2</h2>-->
+<!--	&lt;!&ndash; lookup in db based on input &ndash;&gt;-->
+<!--	<p>Start typing a name in the input field below:</p>-->
+<!--	<form action="{{ @BASE }}/ajaxEx/user/" method="post">-->
+<!--		Last name: <input type="text" name="LastName" onkeyup="showHint(this.value)" size="20" />-->
+<!--		<input type="submit" name="submit" value="submit"/>-->
+<!--	</form>-->
+<!--	<p>Suggestions: <span id="txtHint"></span></p>-->
+
+<!--	<button onclick="showUsers()">Test</button>-->
+<!--	the below navigation is borrowed from: https://codepen.io/enmckinn/pen/JxOOej-->
+<!--	<nav class="menu">-->
+<!--		<input checked="checked" class="menu-toggler" type="checkbox" method="post"  onclick="showUsers()">-->
+<!--		<label for="menu-toggler"></label>-->
+<!--		<ul>-->
+<!--			<li class="menu-item">-->
+<!--				<a class="fas fa-cat" href=""></a>-->
+<!--			</li>-->
+<!--			<li class="menu-item">-->
+<!--				<a class="fas fa-cookie-bite" href="#"></a>-->
+<!--			</li>-->
+<!--			<li class="menu-item">-->
+<!--				<a class="fab fa-earlybirds" href="#"></a>-->
+<!--			</li>-->
+<!--			<li class="menu-item">-->
+<!--				<a class="fab fa-fly"href="#"></a>-->
+<!--			</li>-->
+<!--			<li class="menu-item">-->
+<!--				<a class ="far fa-gem" href="#"></a>-->
+<!--			</li>-->
+<!--			<li class="menu-item">-->
+<!--				<a class="fas fa-glass-cheers" href="#"></a>-->
+<!--			</li>-->
+<!--		</ul>-->
+<!--	</nav>-->
+<!--The following is borrowed and edited from: https://codepen.io/GreenSock/pen/rNKzZdj-->
+	<div id="page" class="site">
+
+<!--		<div id="feather" class="feather"></div>-->
+
+<!--		<header id="masthead" class="site-header" role="banner">-->
+<!--			<nav class="anchor-nav" role="navigation">-->
+<!--				<a href="#intro" class="anchor">Home</a>-->
+<!--				<a href="#panel-1" class="anchor">Panel 1</a>-->
+<!--				<a href="#panel-3" class="anchor">Panel 3</a>-->
+<!--				<a href="#panel-5" class="anchor">Panel 5</a>-->
+<!--				<a href="#map" class="anchor">Map</a>-->
+<!--			</nav>-->
+<!--		</header>-->
+
+		<main id="content" class="site-content" role="main">
+
+			<section id="intro" class="full-screen">
+				<!--The following is borrowed from: https://codepen.io/nocni_sovac/pen/vYGoZpP-->
+				<div id="WebGL-output">
+				</div>
+
+
+
+				<img class="planetImg" src="https://assets.codepen.io/1651485/planet.png" />
+
+				<div class="mainText">
+					<div class="mainTitle">
+						Disease Insight Compass
+					</div>
+					<div class="subTitle">
+						Empowering You with the Knowledge to Stay Healthy
+					</div>
+					<input type="text" class="search-click" name="" placeholder="search here..." />
+					<div class="container-search">
+						<input type="text" placeholder="Search...">
+						<div class="search"></div>-->
+					</div>
+					<div class="cursor"></div>
+				</div>
+			</section>
+
+			<section id="panels">
+
+				<div id="panels-container" style="width: 500%;">
+					<article id="panel-1" class="panel full-screen red">
+						<div class="container">
+							<div class="row">
+								<div class="col-6">
+
+									<img src="" alt="">
+
+								</div>
+								<div class="col-6 d-flex flex-column">
+
+									<h2>Panel 1</h2>
+
+									<p class="step-description">
+										Lorem Ipsum is simply dummy text of the printing and typesetting industry. Including versions of Lorem Ipsum.
+									</p>
+
+									<div class="panels-navigation text-right">
+										<div class="nav-panel" data-sign="plus"><a href="#panel-2" class="anchor">Next</a></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</article>
+					<article id="panel-2" class="panel full-screen orange">
+						<div class="container">
+							<div class="row">
+								<div class="col-6">
+
+									<img src="" alt="">
+
+								</div>
+								<div class="col-6 d-flex flex-column">
+
+									<h2>Panel 2</h2>
+
+									<p class="step-description">
+										Lorem Ipsum is simply dummy text of the printing and typesetting industry. Including versions of Lorem Ipsum.
+									</p>
+
+									<div class="panels-navigation">
+										<div class="nav-panel" data-sign="minus"><a href="#panel-1" class="anchor">Prev</a></div>
+										<div class="nav-panel" data-sign="plus"><a href="#panel-3" class="anchor">Next</a></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</article>
+					<article id="panel-3" class="panel full-screen purple">
+						<div class="container">
+							<div class="row">
+								<div class="col-6">
+
+									<img src="" alt="">
+
+								</div>
+								<div class="col-6 d-flex flex-column">
+
+									<h2>Panel 3</h2>
+
+									<p class="step-description">
+										Lorem Ipsum is simply dummy text of the printing and typesetting industry. Including versions of Lorem Ipsum.
+									</p>
+
+									<div class="panels-navigation">
+										<div class="nav-panel" data-sign="minus"><a href="#panel-2" class="anchor">Prev</a></div>
+										<div class="nav-panel" data-sign="plus"><a href="#panel-4" class="anchor">Next</a></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</article>
+					<article id="panel-4" class="panel full-screen green">
+						<div class="container">
+							<div class="row">
+								<div class="col-6">
+
+									<img src="" alt="">
+
+								</div>
+								<div class="col-6 d-flex flex-column">
+
+									<h2>Panel 4</h2>
+
+									<p class="step-description">
+										Lorem Ipsum is simply dummy text of the printing and typesetting industry. Including versions of Lorem Ipsum.
+									</p>
+
+									<div class="panels-navigation">
+										<div class="nav-panel" data-sign="minus"><a href="#panel-3" class="anchor">Prev</a></div>
+										<div class="nav-panel" data-sign="plus"><a href="#panel-5" class="anchor">Next</a></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</article>
+					<article id="panel-5" class="panel full-screen gray">
+						<div class="container">
+							<div class="row">
+								<div class="col-6">
+
+									<img src="" alt="">
+
+								</div>
+								<div class="col-6 d-flex flex-column">
+
+									<h2>Panel 5</h2>
+
+									<p class="step-description">
+										Lorem Ipsum is simply dummy text of the printing and typesetting industry. Including versions of Lorem Ipsum.
+									</p>
+
+									<div class="panels-navigation text-right">
+										<div class="nav-panel" data-sign="minus"><a href="#panel-4" class="anchor">Prev</a></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</article>
+				</div>
+			</section>
+
+			<section id="map" class="full-screen"></section>
+
+		</main>
+
+	</div>
+
+
+
+
+
+
+
+
+</body>
+</html>

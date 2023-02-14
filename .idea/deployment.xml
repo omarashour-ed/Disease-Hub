@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="sedin181@edinburgh.domains" filePermissions="420" folderPermissions="493" remoteFilesAllowedToDisappearOnAutoupload="false" autoUploadExternalChanges="true">
+    <serverData>
+      <paths name="sedin181@edinburgh.domains">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/public_html/idc" local="$PROJECT_DIR$" web="IDC" />
+            <mapping deploy="/AboveWebRoot" local="$PROJECT_DIR$/../AboveWebRoot" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ON_EXPLICIT_SAVE" />
+  </component>
+</project>
